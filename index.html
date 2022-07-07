@@ -6,10 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K19MDB</title>
     <link rel="stylesheet" href="styles/app.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>My Movie database</h1>
+    <nav>
+        <div></div>
+        <div></div>
+    </nav>
+    <section class="hero" id="hero">
+        <h1>My Movie database</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero nemo, reprehenderit eius doloremque, minima officia laborum veritatis quae ducimus recusandae error consequuntur omnis? Vero labore placeat, corporis velit at voluptatem.
+        Iste totam laborum atque quis veniam deserunt obcaecati aspernatur minus? Eum rem nostrum dolorum perspiciatis amet cum non. Id itaque reiciendis reprehenderit quibusdam quaerat. Accusantium odit rerum corrupti assumenda. Eveniet.</p>
+    </section>
 
-    <script src="src/main.js"></script>
+    <section id="search">
+        <form action="" id="search-form">
+            <input type="text">
+            <button>Search</button>
+        </form>
+    </section>
+
+    <section id="movies-grid-container">
+        
+    </section>
+
+    <section>
+        <h2>Popular Movies Today</h2>
+        <div class="contenedor" id="contenedor"></div>
+
+        <div class="paginacion">
+            <button id="btnPrev">Previus</button>
+            <button id="btnNext">Next</button>
+        </div>
+    </section>
+
+    <script type="module" src="src/main.mjs"></script>
 </body>
 </html>
