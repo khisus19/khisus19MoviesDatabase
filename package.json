@@ -1,0 +1,19 @@
+{
+  "name": "moviedb",
+  "version": "1.0.0",
+  "description": "My own movie database",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khisus19/khisus19MoviesDatabase.git"
+  },
+  "author": "Khisus19 <khisus19@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/khisus19/khisus19MoviesDatabase/issues"
+  },
+  "homepage": "https://github.com/khisus19/khisus19MoviesDatabase#readme"
+}
