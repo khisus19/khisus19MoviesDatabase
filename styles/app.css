@@ -26,7 +26,10 @@ nav {
 #hero {
     width: 100%;
     height: auto;
-    display: none;
+	padding: 20px 50px;
+	display: none;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 500px), 1fr));
+	gap: 40px;
 }
 h1 {
     margin: 30px auto;
@@ -34,9 +37,19 @@ h1 {
     color: var(--white);
     font-size: 5rem;
 }
+.title-span {
+	color: var(--green);
+}
+.subtitle {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 #hero p {
-    font-size: 2rem;
-    color: var(--white);
+	width: 90%;
+	padding: 20px;
+    font-size: 1.4rem;
+    color: var(--medium-grey);
 }
 
 /* Trending Section */

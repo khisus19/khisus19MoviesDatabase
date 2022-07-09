@@ -17,36 +17,42 @@
         <div></div>
     </nav>
     <section class="hero" id="hero">
-        <h1>My Movie database</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero nemo, reprehenderit eius doloremque, minima officia laborum veritatis quae ducimus recusandae error consequuntur omnis? Vero labore placeat, corporis velit at voluptatem.
-        Iste totam laborum atque quis veniam deserunt obcaecati aspernatur minus? Eum rem nostrum dolorum perspiciatis amet cum non. Id itaque reiciendis reprehenderit quibusdam quaerat. Accusantium odit rerum corrupti assumenda. Eveniet.</p>
+        <h1><span class="title-span">Khisus19</span> Movie Database</h1>
+        <div class="subtitle">
+            <p>Look for the next movie to watch.<br> 
+                We have thousands of movies in our catalog. Search through the trending or top-rated films right now.</p>
+        </div>
     </section>
 
     <section id="search">
         <form action="" id="search-form">
+            <select name="genre" id="genre-dropdown">
+                <option>Choose a genre</option>
+                <option id="tredingDropdown">Trending</option>
+                <option id="topRatedDropdown">Top-rated</option>
+            </select>
             <input type="text">
             <button>Search</button>
         </form>
     </section>
-
+    
     <section id="trending-section">
-        <h2 class="grid-title">Top Rated Movies</h2>
+        <h2 class="grid-title">Trending Movies</h2>
         <div id="movies-grid-container">
-
+            
         </div>
         
     </section>
-
     <section>
         <div class="contenedor" id="contenedor"></div>
-
         <div class="paginacion">
             <button id="btnPrev">Previus</button>
             <button id="btnNext">Next</button>
         </div>
     </section>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="module" src="src/main.mjs"></script>
+    <script type="module" src="src/main2.mjs"></script>
 </body>
 </html>
