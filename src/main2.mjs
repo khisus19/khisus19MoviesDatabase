@@ -15,6 +15,7 @@ const btnNext = document.getElementById("btnNext");
 let currentPage = 1;
 const trendingBtn = document.getElementById("tredingDropdown");
 const topRatedBtn = document.getElementById("topRatedDropdown");
+const gridTitle = document.getElementById("grid-title");
 
 
 btnNext.addEventListener("click", () => {
@@ -48,7 +49,6 @@ const trendingMovies = async() => {
 
     data.results.forEach(item => movieLoader(item))
 }
-// trendingMovies()
 
 const topMovies = async() => {
     movies = "";
@@ -77,10 +77,14 @@ const movieLoader = (item) => {
 trendingBtn.addEventListener("click", () => {
     currentPage = 1;
     trendingMovies()
+    gridTitle.innerText = "Trending Movies"
+
 })
 topRatedBtn.addEventListener("click", () => {
     currentPage = 1;
     topMovies()
+    gridTitle.innerText = "Top-rated Movies"
+
 })
 
 if(document.getElementById("genre-dropdown").value === "Trending") {
