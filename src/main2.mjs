@@ -15,13 +15,14 @@ const btnNext = document.getElementById("btnNext");
 let currentPage = 1;
 const trendingBtn = document.getElementById("tredingDropdown");
 const topRatedBtn = document.getElementById("topRatedDropdown");
-const gridTitle = document.getElementById("grid-title");
 
+const searchBtn = document.getElementById("search-btn");
+const gridTitle = document.getElementById("grid-title");
 
 btnNext.addEventListener("click", () => {
     if (currentPage < 1000) {
         currentPage++;
-        if(document.getElementById("genre-dropdown").value === "Trending") {
+        if(document.getElementById("sort-dropdown").value === "Trending") {
             trendingMovies()
         } else {
             topMovies()
@@ -42,7 +43,6 @@ btnPrev.addEventListener("click", () => {
 const trendingMovies = async() => {
     movies = "";
     const trendingUrl = `trending/movie/week?page=${currentPage}`;
-    const topRatedUrl = `movie/top_rated?page=${currentPage}`;
     
     const { data } = await api(trendingUrl)
     // console.log(data)
@@ -55,7 +55,7 @@ const topMovies = async() => {
     const topRatedUrl = `movie/top_rated?page=${currentPage}`;
     
     const { data } = await api(topRatedUrl)
-    console.log(data)
+    // console.log(data)
 
     data.results.forEach(item => movieLoader(item))
 }
@@ -87,8 +87,26 @@ topRatedBtn.addEventListener("click", () => {
 
 })
 
-if(document.getElementById("genre-dropdown").value === "Trending") {
-    trendingMovies()
-} else {
-    topMovies()
+
+// if(document.getElementById("sort-dropdown").value === "Trending") {
+//     trendingMovies()
+// } else {
+//     topMovies()
+// }
+
+const searchMovie = async(query) => {
+    const searchEndpoint = "https://api.themoviedb.org/3/search/movie?";
+
+    const { data } = await api(`${searchEndpoint}api_key=${API_KEY}&query=${query}`);
+    data.results.forEach(movie => {
+        movieLoader(movie)
+    })
 }
+
+searchBtn.addEventListener("click", () => {
+    const searchInput = document.getElementById("search-input");
+    movies = "";
+    searchMovie(searchInput.value)
+})
+
+trendingMovies()
