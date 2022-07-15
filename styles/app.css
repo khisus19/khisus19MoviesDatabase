@@ -24,43 +24,81 @@ nav {
     height: 50px;
 }
 #hero {
-    width: 100%;
-    height: auto;
-	padding: 20px 50px;
-	display: none;
-	grid-template-columns: repeat(auto-fill, minmax(min(100%, 500px), 1fr));
+	margin: 50px auto;
+    width: 90%;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr));
 	gap: 40px;
 }
-h1 {
-    margin: 30px auto;
-    width: 50%;
+.title {
+	min-width: 350px;
+	max-width: 600px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.title h1 {
     color: var(--white);
-    font-size: 5rem;
+    font-size: 4.5rem;
 }
 .title-span {
 	color: var(--green);
 }
 .subtitle {
+	min-width: 350px;
+	max-width: 600px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 #hero p {
-	width: 90%;
-	padding: 20px;
     font-size: 1.4rem;
     color: var(--medium-grey);
 }
 
+/* Search section */
+#search {
+	margin: 30px auto;
+	width: 90%;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 500px), 1fr));
+	gap: 40px;
+}
+#search-form {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+#sort-dropdown, #search-input, #search-btn {
+	margin: 10px 5px;
+	padding: 8px;
+	min-width: 30%;
+	height: 40px;
+	background: var(--dark-grey);
+	border: none;
+	border-radius: 5px;
+	color: var(--white);
+	font-size: 1rem;
+	font-weight: 500;
+	letter-spacing: 1px;
+}
+#search-btn {
+	min-width: 100px;
+	background: var(--main-btn);
+	color: var(--white);
+	font-weight: 700;
+}
+
 /* Trending Section */
-#trending-section {
+#movies-section {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
-#trending-section h2 {
+#movies-section h2 {
 	font-size: 2.5rem;
 }
 #movies-grid-container {
@@ -122,35 +160,4 @@ h1 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-.paginacion {
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	gap: 20px;
-	padding: 10px;
-}
-
-.paginacion button {
-	cursor: pointer;
-	border: none;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-	height: 50px;
-	width: 200px;
-	background: var(--main-btn);
-	color: var(--white);
-	border-radius: 100px;
-	font-family: 'Montserrat', sans-serif;
-	font-weight: 600;
-	transition: .3s ease all;
-}
-
-.paginacion button:hover {
-	background: var(--green);
 }
