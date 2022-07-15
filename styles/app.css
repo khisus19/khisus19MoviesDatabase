@@ -81,6 +81,9 @@ h1 {
 	flex-direction: column;
 	justify-content: flex-end;
 }
+.movie-card img {
+	min-height: 200px;
+}
 .description {
 	position: absolute;
 	padding: 10px;

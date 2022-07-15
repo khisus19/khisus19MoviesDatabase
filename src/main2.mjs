@@ -10,8 +10,6 @@ const api = axios.create({
 })
 
 let movies = "";
-const btnPrev = document.getElementById("btnPrev");
-const btnNext = document.getElementById("btnNext");
 let currentPage = 1;
 const trendingBtn = document.getElementById("tredingDropdown");
 const topRatedBtn = document.getElementById("topRatedDropdown");
@@ -19,45 +17,46 @@ const topRatedBtn = document.getElementById("topRatedDropdown");
 const searchBtn = document.getElementById("search-btn");
 const gridTitle = document.getElementById("grid-title");
 
-btnNext.addEventListener("click", () => {
-    if (currentPage < 1000) {
-        currentPage++;
-        if(document.getElementById("sort-dropdown").value === "Trending") {
-            trendingMovies()
-        } else {
+/* Observer */
+let observer = new IntersectionObserver((entradas, observer) => {
+    entradas.forEach(entrada => {
+        if(entrada.isIntersecting && location.hash === "#top-rated") {
+            currentPage++;
             topMovies()
-        }
-    }
-})
-btnPrev.addEventListener("click", () => {
-    if (currentPage > 1) {
-        currentPage--;
-        if(document.getElementById("genre-dropdown").value === "Trending") {
+        } else if(entrada.isIntersecting && location.hash === "#trending") {
+            currentPage++;
             trendingMovies()
-        } else {
-            topMovies()
         }
-    }
+    })
+}, {
+    rootMargin: "0px 0px 300px 0px",
+    threshold: 1.0
 })
 
 const trendingMovies = async() => {
-    movies = "";
     const trendingUrl = `trending/movie/week?page=${currentPage}`;
     
     const { data } = await api(trendingUrl)
     // console.log(data)
 
     data.results.forEach(item => movieLoader(item))
+    
+    const moviesOnScreen = document.querySelectorAll("#movies-grid-container .movie-card");
+    let lastMovie = moviesOnScreen[moviesOnScreen.length - 1];
+    observer.observe(lastMovie);
 }
 
 const topMovies = async() => {
-    movies = "";
-    const topRatedUrl = `movie/top_rated?page=${currentPage}`;
+    const topRatedEndpoint = `movie/top_rated?page=${currentPage}`;
     
-    const { data } = await api(topRatedUrl)
+    const { data } = await api(topRatedEndpoint)
     // console.log(data)
 
     data.results.forEach(item => movieLoader(item))
+
+    const moviesOnScreen = document.querySelectorAll("#movies-grid-container .movie-card");
+    let lastMovie = moviesOnScreen[moviesOnScreen.length - 1];
+    observer.observe(lastMovie);
 }
 
 const movieLoader = (item) => {
@@ -72,36 +71,35 @@ const movieLoader = (item) => {
         </article>
     `;
     document.getElementById("movies-grid-container").innerHTML = movies;
+
 }
 
-trendingBtn.addEventListener("click", () => {
-    currentPage = 1;
-    trendingMovies()
-    gridTitle.innerText = "Trending Movies"
-
-})
-topRatedBtn.addEventListener("click", () => {
-    currentPage = 1;
-    topMovies()
-    gridTitle.innerText = "Top-rated Movies"
-
-})
-
-
-// if(document.getElementById("sort-dropdown").value === "Trending") {
-//     trendingMovies()
-// } else {
-//     topMovies()
-// }
-
 const searchMovie = async(query) => {
-    const searchEndpoint = "https://api.themoviedb.org/3/search/movie?";
+    const searchEndpoint = "search/movie?";
+    movies = "";
 
     const { data } = await api(`${searchEndpoint}api_key=${API_KEY}&query=${query}`);
     data.results.forEach(movie => {
         movieLoader(movie)
     })
+    location.hash = `search=${query}`;
+    gridTitle.innerText = "Search"
 }
+
+trendingBtn.addEventListener("click", () => {
+    movies = "";
+    currentPage = 1;
+    trendingMovies();
+    gridTitle.innerText = "Trending Movies"
+    location.hash = "trending"
+})
+topRatedBtn.addEventListener("click", () => {
+    movies = "";
+    currentPage = 1;
+    topMovies();
+    gridTitle.innerText = "Top-rated Movies"
+    location.hash = "top-rated"
+})
 
 searchBtn.addEventListener("click", () => {
     const searchInput = document.getElementById("search-input");
