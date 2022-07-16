@@ -27,7 +27,7 @@ nav {
 	margin: 50px auto;
     width: 90%;
 	min-height: 60vh;
-	display: grid;
+	display: none;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
 	gap: 40px;
 }
@@ -119,8 +119,8 @@ nav {
 .movie-card {
 	text-align: center;
 	width: 100%;
-	position: relative;
 	border-radius: 8px;
+	position: relative;
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
@@ -129,8 +129,15 @@ nav {
 .movie-card img {
 	min-height: 200px;
 }
-.description {
+.movie-card a {
 	position: absolute;
+	width: 100%;
+	text-decoration: none;
+}
+.movie-card a:hover {
+	height: 100%;
+}
+.description {
 	padding: 10px;
 	width: 100%;
 	min-height: 35%;
@@ -141,6 +148,7 @@ nav {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	z-index: 1;
 }
 .description:hover {
 	height: 100%;

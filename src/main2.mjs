@@ -22,10 +22,10 @@ let observer = new IntersectionObserver((entradas, observer) => {
     entradas.forEach(entrada => {
         if(entrada.isIntersecting && location.hash === "#top-rated") {
             currentPage++;
-            topMovies()
+            topMovies();
         } else if(entrada.isIntersecting && location.hash === "#trending") {
             currentPage++;
-            trendingMovies()
+            trendingMovies();
         }
     })
 }, {
@@ -63,11 +63,13 @@ const movieLoader = (item) => {
     movies += `
         <article class="movie-card">
             <img src="https://image.tmdb.org/t/p/w500/${item.poster_path}" />
-            <div class="description" id="description">
-                <p class="year">${item.release_date.slice(0,4)}</p>
-                <h3 class="movie-title">${item.title}</h3>
-                <p class="average">${item.vote_average.toFixed(1)}</p>
-            </div>
+            <a href="#">
+                <div class="description" id="description">
+                    <p class="year">${item.release_date.slice(0,4)}</p>
+                    <h3 class="movie-title">${item.title}</h3>
+                    <p class="average">${item.vote_average.toFixed(1)}</p>
+                </div>
+            </a>
         </article>
     `;
     document.getElementById("movies-grid-container").innerHTML = movies;
@@ -75,15 +77,24 @@ const movieLoader = (item) => {
 }
 
 const searchMovie = async(query) => {
-    const searchEndpoint = "search/movie?";
+    const searchEndpoint = "search/movie";
     movies = "";
 
-    const { data } = await api(`${searchEndpoint}api_key=${API_KEY}&query=${query}`);
-    data.results.forEach(movie => {
-        movieLoader(movie)
-    })
-    location.hash = `search=${query}`;
-    gridTitle.innerText = "Search"
+    const { data } = await api(`${searchEndpoint}`, {
+        params: {
+            query,
+        },
+    });
+    if(data.message === "Request aborted"){
+        console.log("Error")
+        gridTitle.innerText = "Error. Try again later"
+    } else {
+        data.results.forEach(movie => {
+            movieLoader(movie)
+        })
+        location.hash = `#search=${query}`;
+        gridTitle.innerText = "Search"
+    }
 }
 
 trendingBtn.addEventListener("click", () => {
