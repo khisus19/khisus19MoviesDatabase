@@ -11,13 +11,14 @@ const api = axios.create({
 })
 
 let movies = "";
+let details = "";
 let currentPage = 1;
 const trendingBtn = document.getElementById("tredingDropdown");
 const topRatedBtn = document.getElementById("topRatedDropdown");
-
+const modal = document.getElementById("myModal");
 const searchBtn = document.getElementById("search-btn");
 const gridTitle = document.getElementById("grid-title");
-const modal = document.getElementById("myModal");
+
 
 /* Observer */
 let observer = new IntersectionObserver((entradas, observer) => {
@@ -65,7 +66,7 @@ const movieLoader = (item) => {
     movies += `
         <article class="movie-card">
             <img src="https://image.tmdb.org/t/p/w500/${item.poster_path}" />
-            <a class="modal-anchor" href='javascript:modeladora()'>
+            <a class="modal-anchor" href='javascript:modeladora(${item.id})'>
                 <div class="description" id="description">
                     <p class="year">${item.release_date.slice(0,4)}</p>
                     <h3 class="movie-title">${item.title}</h3>
@@ -74,6 +75,7 @@ const movieLoader = (item) => {
             </a>
         </article>
     `;
+    modalLoader(item.id)
     document.getElementById("movies-grid-container").innerHTML = movies;
 
 }
@@ -95,6 +97,28 @@ const searchMovie = async(query) => {
         location.hash = `#search=${query.replace(/\s/g, "-")}`;
         gridTitle.innerText = "Search"
     }
+}
+
+// Modal container loader
+const modalLoader = async(movie_id) => {
+    const idSearchUrl = `https://api.themoviedb.org/3/movie/${movie_id}`;
+    
+    const res = await fetch(`${idSearchUrl}?api_key=${API_KEY}`);
+    const data = await res.json();
+    
+    details += `
+        <img src="https://image.tmdb.org/t/p/w500/${data.poster_path}" />
+        <div class="description" id="description">
+            <p class="year">${data.release_date.slice(0,4)}</p>
+            <h3 class="movie-title">${data.title}</h3>
+            <p class="average">${data.vote_average.toFixed(1)}</p>
+            <p class="synopsis">${data.overview}</p>
+            <p class="runtime">${data.runtime} min</p>
+            <p class="tagline">${data.tagline}</p>
+            </div>
+    `
+    console.log(data)
+    document.getElementById("modal-columns-container").innerHTML = details;
 }
 
 trendingBtn.addEventListener("click", () => {
@@ -119,18 +143,9 @@ searchBtn.addEventListener("click", () => {
 })
 
 trendingMovies()
-/* const modalBtn = document.getElementsByClassName("modal-anchor")
-
-modalBtn.addEventListener("click", () => {
-    modal.style.display = "block"
-}) */
-
-// Get the button that opens the modal
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
-
-
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {

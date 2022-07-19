@@ -193,11 +193,12 @@ nav {
 
 /* Modal Content */
 .modal-content {
-	background-color: #fefefe;
+	background-color: var(--dark-blue);
 	margin: auto;
 	padding: 20px;
 	border: 1px solid #888;
-	width: 80%;
+	border-radius: 8px;
+	width: 90%;
   }
   
   /* The Close Button */

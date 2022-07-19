@@ -6,10 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K19MDB</title>
     <link rel="stylesheet" href="styles/app.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500;700&display=swap" rel="stylesheet">
+    <script>
+        const modeladora = () => {
+            const modal = document.getElementById("myModal");
+            modal.style.display = "block"
+        }
+    </script>
 </head>
 <body>
     <nav>
@@ -38,7 +43,7 @@
     </section>
     
     <section id="movies-section">
-        <h2 class="grid-title" id="grid-title">Trending Movies</h2>
+        <h2 class="grid-title" id="grid-title">My personal Favorites</h2>
         <div id="movies-grid-container">
             
         </div>
@@ -52,8 +57,19 @@
 
         <!-- Modal content -->
         <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
+            <span class="close">&times;</span>
+            <div id="modal-columns-container">
+                <img src="https://image.tmdb.org/t/p/w500/${item.poster_path}" />
+                <div class="description" id="description">
+                    <p class="year">${item.release_date.slice(0,4)}</p>
+                    <h3 class="movie-title">${item.title}</h3>
+                    <p class="average">${item.vote_average.toFixed(1)}</p>
+                    <p class="synopsis">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque voluptate debitis natus quo iusto in culpa suscipit! Ad, nobis ipsa?</p>
+                    <p class="runtime">134 min</p>
+                    <p class="tagline">Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
+                </div>
+            </div>
+            <p>Some text in the Modal..</p>
         </div>
   
     </div>

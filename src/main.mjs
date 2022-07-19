@@ -1,3 +1,4 @@
 export const modeladora = () => {
- console.log("Hola")
+    const modal = document.getElementById("myModal");
+    modal.style.display = "block"
 }
