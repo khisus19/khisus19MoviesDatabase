@@ -90,7 +90,7 @@ const searchMovie = async(query) => {
         data.results.forEach(movie => {
             movieLoader(movie)
         })
-        location.hash = `#search=${query}`;
+        location.hash = `#search=${query.replace(/\s/g, "-")}`;
         gridTitle.innerText = "Search"
     }
 }
