@@ -79,14 +79,12 @@ const movieLoader = (item) => {
 }
 
 const searchMovie = async(query) => {
-    const searchEndpoint = "search/movie";
+    const searchEndpoint = "https://api.themoviedb.org/3/search/movie";
     movies = "";
 
-    const { data } = await api(`${searchEndpoint}`, {
-        params: {
-            query,
-        },
-    });
+    const res  = await fetch(`${searchEndpoint}?api_key=${API_KEY}&query=${query}`);
+    const data = await res.json();
+    console.log(data)
     if(data.message === "Request aborted"){
         console.log("Error")
         gridTitle.innerText = "Error. Try again later"
@@ -94,7 +92,7 @@ const searchMovie = async(query) => {
         data.results.forEach(movie => {
             movieLoader(movie)
         })
-        location.hash = `#search=${query}`;
+        location.hash = `#search=${query.replace(/\s/g, "-")}`;
         gridTitle.innerText = "Search"
     }
 }
