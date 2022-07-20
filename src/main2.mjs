@@ -66,7 +66,7 @@ const movieLoader = (item) => {
     movies += `
         <article class="movie-card">
             <img src="https://image.tmdb.org/t/p/w500/${item.poster_path}" />
-            <a class="modal-anchor" href='javascript:modeladora(${item.id})'>
+            <a class="modal-anchor" href="/movieView.html#${item.id}">
                 <div class="description" id="description">
                     <p class="year">${item.release_date.slice(0,4)}</p>
                     <h3 class="movie-title">${item.title}</h3>
@@ -75,7 +75,6 @@ const movieLoader = (item) => {
             </a>
         </article>
     `;
-    modalLoader(item.id)
     document.getElementById("movies-grid-container").innerHTML = movies;
 
 }
@@ -100,13 +99,14 @@ const searchMovie = async(query) => {
 }
 
 // Modal container loader
-const modalLoader = async(movie_id) => {
+/* const modalLoader = async(movie_id) => {
     const idSearchUrl = `https://api.themoviedb.org/3/movie/${movie_id}`;
     
     const res = await fetch(`${idSearchUrl}?api_key=${API_KEY}`);
     const data = await res.json();
     
     details += `
+    <div id="modal-card-${data.id}">
         <img src="https://image.tmdb.org/t/p/w500/${data.poster_path}" />
         <div class="description" id="description">
             <p class="year">${data.release_date.slice(0,4)}</p>
@@ -115,11 +115,12 @@ const modalLoader = async(movie_id) => {
             <p class="synopsis">${data.overview}</p>
             <p class="runtime">${data.runtime} min</p>
             <p class="tagline">${data.tagline}</p>
-            </div>
+        </div>
+    </div>
     `
     console.log(data)
     document.getElementById("modal-columns-container").innerHTML = details;
-}
+} */
 
 trendingBtn.addEventListener("click", () => {
     movies = "";
@@ -143,18 +144,3 @@ searchBtn.addEventListener("click", () => {
 })
 
 trendingMovies()
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}

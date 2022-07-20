@@ -50,31 +50,6 @@
         
     </section>
 
-    <!-- Trigger/Open The Modal -->
-    <button id="myBtn">Open Modal</button>
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="modal-columns-container">
-                <img src="https://image.tmdb.org/t/p/w500/${item.poster_path}" />
-                <div class="description" id="description">
-                    <p class="year">${item.release_date.slice(0,4)}</p>
-                    <h3 class="movie-title">${item.title}</h3>
-                    <p class="average">${item.vote_average.toFixed(1)}</p>
-                    <p class="synopsis">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque voluptate debitis natus quo iusto in culpa suscipit! Ad, nobis ipsa?</p>
-                    <p class="runtime">134 min</p>
-                    <p class="tagline">Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
-                </div>
-            </div>
-            <p>Some text in the Modal..</p>
-        </div>
-  
-    </div>
-    
-
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="src/main2.mjs"></script>
 </body>
