@@ -1,5 +1,5 @@
 import { API_KEY } from "./api_key.mjs";
-import { modeladora } from "./main.mjs";
+
 const api = axios.create({
     baseURL: "https://api.themoviedb.org/3/",
     headers: {
@@ -11,14 +11,14 @@ const api = axios.create({
 })
 
 let movies = "";
-let details = "";
 let currentPage = 1;
+let favoritesMoviesIds = [769, 238, 429, 13, 105, 694, 111, 68718, 515001, 280, 938, 329, 106];
 const trendingBtn = document.getElementById("tredingDropdown");
 const topRatedBtn = document.getElementById("topRatedDropdown");
 const modal = document.getElementById("myModal");
 const searchBtn = document.getElementById("search-btn");
 const gridTitle = document.getElementById("grid-title");
-
+console.log(favoritesMoviesIds.length)
 
 /* Observer */
 let observer = new IntersectionObserver((entradas, observer) => {
@@ -35,6 +35,15 @@ let observer = new IntersectionObserver((entradas, observer) => {
     rootMargin: "0px 0px 300px 0px",
     threshold: 1.0
 })
+
+const personalFavs = async(movie_id) => {
+    const favsUrl = `https://api.themoviedb.org/3/movie/${movie_id}`;
+    
+    const res = await fetch(`${favsUrl}?api_key=${API_KEY}`);
+    const data = await res.json();
+    movieLoader(data)
+}
+favoritesMoviesIds.forEach(item => personalFavs(item))
 
 const trendingMovies = async() => {
     const trendingUrl = `trending/movie/week?page=${currentPage}`;
@@ -98,30 +107,6 @@ const searchMovie = async(query) => {
     }
 }
 
-// Modal container loader
-/* const modalLoader = async(movie_id) => {
-    const idSearchUrl = `https://api.themoviedb.org/3/movie/${movie_id}`;
-    
-    const res = await fetch(`${idSearchUrl}?api_key=${API_KEY}`);
-    const data = await res.json();
-    
-    details += `
-    <div id="modal-card-${data.id}">
-        <img src="https://image.tmdb.org/t/p/w500/${data.poster_path}" />
-        <div class="description" id="description">
-            <p class="year">${data.release_date.slice(0,4)}</p>
-            <h3 class="movie-title">${data.title}</h3>
-            <p class="average">${data.vote_average.toFixed(1)}</p>
-            <p class="synopsis">${data.overview}</p>
-            <p class="runtime">${data.runtime} min</p>
-            <p class="tagline">${data.tagline}</p>
-        </div>
-    </div>
-    `
-    console.log(data)
-    document.getElementById("modal-columns-container").innerHTML = details;
-} */
-
 trendingBtn.addEventListener("click", () => {
     movies = "";
     currentPage = 1;
@@ -143,4 +128,4 @@ searchBtn.addEventListener("click", () => {
     searchMovie(searchInput.value)
 })
 
-trendingMovies()
+// trendingMovies()
