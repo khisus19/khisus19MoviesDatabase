@@ -28,16 +28,31 @@ nav {
 }
 .movie-container {
     margin: 50px auto;
+    padding: 20px;
     width: 95%;
 	min-height: 60vh;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
 	gap: 30px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
 }
-.movie-container img, .description-container {
+.movie-container #poster, .description-container {
     max-width: 400px;
     width: 100%;
     margin: 0 auto;
+    opacity: 100%;
+}
+#backdrop {
+    margin: 0 auto;
+    min-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+    position: absolute;
+    z-index: -1;
+    opacity: 20%;
+    filter: blur(5px);
 }
 .description-container {
     padding: 15px;

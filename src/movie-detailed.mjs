@@ -11,8 +11,9 @@ const movieDetailedView = async(movie_id) => {
     
     let genre = data.genres.map(ele => ele.name).join(", ")
     details += `
-    <div id="modal-card-${data.id}" class="movie-container">
-        <img src="https://image.tmdb.org/t/p/w500/${data.poster_path}" />
+    <div id="movie-container" class="movie-container">
+        <img id="backdrop" src="https://image.tmdb.org/t/p/w500/${data.backdrop_path}"/>
+        <img id="poster" src="https://image.tmdb.org/t/p/w500/${data.poster_path}" />
         <div class="description-container" id="description">
             <p class="year">${data.release_date.slice(0,4)}</p>
             <p class="genre">${genre}</p>
@@ -25,7 +26,6 @@ const movieDetailedView = async(movie_id) => {
     </div>
     `
     console.log(data)
-    console.log(genre)
     document.getElementById("movie-view").innerHTML = details;
 }
 console.log("id:", movieId)
