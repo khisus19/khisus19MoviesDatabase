@@ -18,7 +18,6 @@ const topRatedBtn = document.getElementById("topRatedDropdown");
 const modal = document.getElementById("myModal");
 const searchBtn = document.getElementById("search-btn");
 const gridTitle = document.getElementById("grid-title");
-console.log(favoritesMoviesIds.length)
 
 /* Observer */
 let observer = new IntersectionObserver((entradas, observer) => {
@@ -48,8 +47,7 @@ favoritesMoviesIds.forEach(item => personalFavs(item))
 const trendingMovies = async() => {
     const trendingUrl = `trending/movie/week?page=${currentPage}`;
     
-    const { data } = await api(trendingUrl)
-    // console.log(data)
+    const { data } = await api(trendingUrl);
 
     data.results.forEach(item => movieLoader(item))
     
@@ -61,8 +59,7 @@ const trendingMovies = async() => {
 const topMovies = async() => {
     const topRatedEndpoint = `movie/top_rated?page=${currentPage}`;
     
-    const { data } = await api(topRatedEndpoint)
-    // console.log(data)
+    const { data } = await api(topRatedEndpoint);
 
     data.results.forEach(item => movieLoader(item))
 
@@ -94,7 +91,6 @@ const searchMovie = async(query) => {
 
     const res  = await fetch(`${searchEndpoint}?api_key=${API_KEY}&query=${query}`);
     const data = await res.json();
-    console.log(data)
     if(data.message === "Request aborted"){
         console.log("Error")
         gridTitle.innerText = "Error. Try again later"
