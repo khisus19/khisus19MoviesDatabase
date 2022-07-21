@@ -12,7 +12,7 @@ const api = axios.create({
 
 let movies = "";
 let currentPage = 1;
-let favoritesMoviesIds = [769, 238, 429, 13, 105, 694, 111, 68718, 515001, 280, 938, 329, 106];
+let favoritesMoviesIds = [769, 238, 5548, 11690, 429, 36557, 105, 610253, 524, 10781, 515001, 280, 938, 329, 106, 9728];
 const trendingBtn = document.getElementById("tredingDropdown");
 const topRatedBtn = document.getElementById("topRatedDropdown");
 const modal = document.getElementById("myModal");
