@@ -42,7 +42,7 @@ const personalFavs = async(movie_id) => {
     const data = await res.json();
     movieLoader(data)
 }
-// favoritesMoviesIds.forEach(item => personalFavs(item))
+favoritesMoviesIds.forEach(item => personalFavs(item))
 
 const trendingMovies = async() => {
     const trendingUrl = `trending/movie/week?page=${currentPage}`;
@@ -99,8 +99,8 @@ const searchMovie = async(query) => {
             movieLoader(movie)
             console.log(movie)
         })
-        // location.hash = `#search=${query.replace(/\s/g, "-")}`;
-        // gridTitle.innerText = "Search"
+        location.hash = `#search=${query.replace(/\s/g, "-")}`;
+        gridTitle.innerText = "Search"
     }
 }
 
