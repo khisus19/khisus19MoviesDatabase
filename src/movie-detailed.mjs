@@ -24,9 +24,7 @@ const movieDetailedView = async(movie_id) => {
             <p class="runtime"><span>Runtime: </span>${data.runtime} min.</p>
         </div>
     </div>
-    `
-    console.log(data)
+    `;
     document.getElementById("movie-view").innerHTML = details;
 }
-console.log("id:", movieId)
 movieDetailedView(movieId)
