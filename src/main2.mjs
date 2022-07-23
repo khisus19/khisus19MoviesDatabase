@@ -13,9 +13,8 @@ const api = axios.create({
 let movies = "";
 let currentPage = 1;
 let favoritesMoviesIds = [769, 238, 5548, 11690, 429, 36557, 105, 610253, 524, 10781, 515001, 280, 938, 329, 106, 9728];
-const trendingBtn = document.getElementById("tredingDropdown");
-const topRatedBtn = document.getElementById("topRatedDropdown");
 const dropdown = document.getElementById("sort-dropdown");
+const searchInput = document.getElementById("search-input");
 const searchBtn = document.getElementById("search-btn");
 const gridTitle = document.getElementById("grid-title");
 let genreArray = [];
@@ -29,6 +28,10 @@ let observer = new IntersectionObserver((entradas, observer) => {
         } else if(entrada.isIntersecting && location.hash === "#trending") {
             currentPage++;
             trendingMovies();
+        } else if(entrada.isIntersecting && location.hash.startsWith("#search=")) {
+            console.log(searchInput.value);
+            currentPage++;
+            searchMovie(searchInputEncoded);
         } else if(entrada.isIntersecting) {
             currentPage++;
             getMoviesByGenre(location.hash.split("-")[1])
@@ -109,6 +112,10 @@ const searchMovie = async(query) => {
         })
         gridTitle.innerText = "Search"
     }
+
+    const moviesOnScreen = document.querySelectorAll("#movies-grid-container .movie-card");
+    let lastMovie = moviesOnScreen[moviesOnScreen.length - 1];
+    observer.observe(lastMovie);
 }
 
 (async() => {
@@ -139,10 +146,10 @@ const getMoviesByGenre = async(id) => {
 
 }
 
+
+// LISTENERS
 searchBtn.addEventListener("click", () => {
-    const searchInput = document.getElementById("search-input");
     movies = "";
-    console.log(encodeURIComponent(searchInput.value))
     searchMovie(searchInput.value)
 })
 
