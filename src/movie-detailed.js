@@ -1,5 +1,3 @@
-import { API_KEY } from "./api_key.mjs";
-
 let details = "";
 let movieId = location.hash.slice(1,)
 

@@ -2,7 +2,7 @@
   "name": "moviedb",
   "version": "1.0.0",
   "description": "My own movie database",
-  "main": "main.js",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
