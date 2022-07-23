@@ -32,7 +32,7 @@ let observer = new IntersectionObserver((entradas, observer) => {
         } else if(entrada.isIntersecting) {
             currentPage++;
             getMoviesByGenre(location.hash.split("-")[1])
-        }
+        } 
     })
 }, {
     rootMargin: "0px 0px 300px 0px",
@@ -90,25 +90,28 @@ const movieLoader = (item) => {
 }
 
 const searchMovie = async(query) => {
-    const searchEndpoint = "https://api.themoviedb.org/3/search/movie";
+    const searchEndpoint = `search/movie?page=${currentPage}`;
     movies = "";
+    location.hash = `#search=${query.replace(/\s/g, "-")}`;
 
-    const res  = await fetch(`${searchEndpoint}?api_key=${API_KEY}&query=${query}`);
-    const data = await res.json();
-    if(data.message === "Request aborted"){
+    const res  = await api.get(searchEndpoint, {
+        params: {
+            query,
+        }
+    });
+
+    if(res.status !== 200){
         console.log("Error")
-        gridTitle.innerText = "Error. Try again later"
+        gridTitle.innerText = "Network Error. Try again later"
     } else {
-        data.results.forEach(movie => {
-            movieLoader(movie)
-            console.log(movie)
+        res.data.results.forEach(movie => {
+            movieLoader(movie);
         })
-        location.hash = `#search=${query.replace(/\s/g, "-")}`;
         gridTitle.innerText = "Search"
     }
 }
 
-const genreDropdownLoader = async() => {
+(async() => {
     const genreListEndpoint = `genre/movie/list`;
 
     const { data } = await api.get(genreListEndpoint);
@@ -118,8 +121,7 @@ const genreDropdownLoader = async() => {
         dropdown.innerHTML += category;
         genreArray.push(item.name, item.id);
     })
-}
-genreDropdownLoader()
+})()    //IIFE - Inmediately Invoked
 
 const getMoviesByGenre = async(id) => {
     const sortByGenreEndpoint = `discover/movie?page=${currentPage}`;
@@ -137,11 +139,12 @@ const getMoviesByGenre = async(id) => {
 
 }
 
-/* searchBtn.addEventListener("click", () => {
+searchBtn.addEventListener("click", () => {
     const searchInput = document.getElementById("search-input");
     movies = "";
+    console.log(encodeURIComponent(searchInput.value))
     searchMovie(searchInput.value)
-}) */
+})
 
 window.addEventListener("DOMContentLoaded", function() { 
     dropdown.addEventListener("change", function() {
