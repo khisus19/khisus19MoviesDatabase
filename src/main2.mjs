@@ -31,7 +31,7 @@ let observer = new IntersectionObserver((entradas, observer) => {
         } else if(entrada.isIntersecting && location.hash.startsWith("#search=")) {
             console.log(searchInput.value);
             currentPage++;
-            searchMovie(searchInputEncoded);
+            searchMovie(searchInput.value);
         } else if(entrada.isIntersecting) {
             currentPage++;
             getMoviesByGenre(location.hash.split("-")[1])
@@ -49,7 +49,7 @@ const personalFavs = async(movie_id) => {
     const data = await res.json();
     movieLoader(data)
 }
-favoritesMoviesIds.forEach(item => personalFavs(item))
+
 
 const trendingMovies = async() => {
     const trendingUrl = `trending/movie/week?page=${currentPage}`;
@@ -76,12 +76,14 @@ const topMovies = async() => {
 }
 
 const movieLoader = (item) => {
+    item.release_date = item.release_date.slice(0,4)
+    
     movies += `
         <article class="movie-card">
             <img src="https://image.tmdb.org/t/p/w500/${item.poster_path}" />
             <a class="modal-anchor" href="/movieView.html#${item.id}">
                 <div class="description" id="description">
-                    <p class="year">${item.release_date.slice(0,4)}</p>
+                    <p class="year">${item.release_date}</p>
                     <h3 class="movie-title">${item.title}</h3>
                     <p class="average">${item.vote_average.toFixed(1)}</p>
                 </div>
@@ -89,7 +91,6 @@ const movieLoader = (item) => {
         </article>
     `;
     document.getElementById("movies-grid-container").innerHTML = movies;
-
 }
 
 const searchMovie = async(query) => {
@@ -108,7 +109,7 @@ const searchMovie = async(query) => {
         gridTitle.innerText = "Network Error. Try again later"
     } else {
         res.data.results.forEach(movie => {
-            movieLoader(movie);
+            movieDetailedView(movie.id);
         })
         gridTitle.innerText = "Search"
     }
@@ -116,6 +117,14 @@ const searchMovie = async(query) => {
     const moviesOnScreen = document.querySelectorAll("#movies-grid-container .movie-card");
     let lastMovie = moviesOnScreen[moviesOnScreen.length - 1];
     observer.observe(lastMovie);
+}
+
+const movieDetailedView = async(movie_id) => {
+    const idSearchUrl = `movie/${movie_id}`;
+    
+    const { data } = await api.get(idSearchUrl);
+    
+    movieLoader(data)
 }
 
 (async() => {
@@ -146,11 +155,14 @@ const getMoviesByGenre = async(id) => {
 
 }
 
-
 // LISTENERS
 searchBtn.addEventListener("click", () => {
     movies = "";
     searchMovie(searchInput.value)
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+    favoritesMoviesIds.forEach(item => personalFavs(item))
 })
 
 window.addEventListener("DOMContentLoaded", function() { 
