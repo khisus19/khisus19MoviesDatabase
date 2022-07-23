@@ -15,9 +15,10 @@ let currentPage = 1;
 let favoritesMoviesIds = [769, 238, 5548, 11690, 429, 36557, 105, 610253, 524, 10781, 515001, 280, 938, 329, 106, 9728];
 const trendingBtn = document.getElementById("tredingDropdown");
 const topRatedBtn = document.getElementById("topRatedDropdown");
-const modal = document.getElementById("myModal");
+const dropdown = document.getElementById("sort-dropdown");
 const searchBtn = document.getElementById("search-btn");
 const gridTitle = document.getElementById("grid-title");
+let genreObject = [];
 
 /* Observer */
 let observer = new IntersectionObserver((entradas, observer) => {
@@ -28,6 +29,10 @@ let observer = new IntersectionObserver((entradas, observer) => {
         } else if(entrada.isIntersecting && location.hash === "#trending") {
             currentPage++;
             trendingMovies();
+        } else if(entrada.isIntersecting) {
+            currentPage++;
+            console.log(currentPage)
+            getMoviesByGenre(location.hash.split("-")[1])
         }
     })
 }, {
@@ -104,23 +109,67 @@ const searchMovie = async(query) => {
     }
 }
 
-trendingBtn.addEventListener("click", () => {
-    movies = "";
-    currentPage = 1;
-    trendingMovies();
-    gridTitle.innerText = "Trending Movies"
-    location.hash = "trending"
-})
-topRatedBtn.addEventListener("click", () => {
-    movies = "";
-    currentPage = 1;
-    topMovies();
-    gridTitle.innerText = "Top-rated Movies"
-    location.hash = "top-rated"
-})
+const genreDropdownLoader = async() => {
+    const genreListEndpoint = `genre/movie/list`;
+
+    const { data } = await api.get(genreListEndpoint);
+    
+    data.genres.forEach(item => {
+        const category = `<option id="${item.name}">${item.name}</option>`;
+        dropdown.innerHTML += category;
+        genreObject.push(item.name, item.id);
+    })
+}
+genreDropdownLoader()
+
+const getMoviesByGenre = async(id) => {
+    const sortByGenreEndpoint = `discover/movie?page=${currentPage}`;
+
+    const { data } = await api.get(sortByGenreEndpoint, {
+        params: {
+            with_genres: id,
+        }
+    })
+    data.results.forEach(item => movieLoader(item))
+
+    const moviesOnScreen = document.querySelectorAll("#movies-grid-container .movie-card");
+    let lastMovie = moviesOnScreen[moviesOnScreen.length - 1];
+    observer.observe(lastMovie);
+
+}
 
 searchBtn.addEventListener("click", () => {
     const searchInput = document.getElementById("search-input");
     movies = "";
     searchMovie(searchInput.value)
+})
+
+window.addEventListener("DOMContentLoaded", function() { 
+    dropdown.addEventListener("change", function() {
+
+      switch(this.value) {
+        case "Trending":
+            movies = "";
+            currentPage = 1;
+            trendingMovies();
+            gridTitle.innerText = "Trending Movies"
+            location.hash = "trending"
+            break;
+        case "Top-rated":
+            movies = "";
+            currentPage = 1;
+            topMovies();
+            gridTitle.innerText = "Top-rated Movies"
+            location.hash = "top-rated"
+            break;
+        default:
+            movies = "";
+            let genreID = genreObject[genreObject.findIndex((genre) => genre === this.value) + 1];
+            location.hash = `${this.value}-${genreID}`;
+            gridTitle.innerText = this.value;
+
+            getMoviesByGenre(genreID)
+            break;
+      }
+    })
 })
