@@ -18,7 +18,7 @@ const topRatedBtn = document.getElementById("topRatedDropdown");
 const dropdown = document.getElementById("sort-dropdown");
 const searchBtn = document.getElementById("search-btn");
 const gridTitle = document.getElementById("grid-title");
-let genreObject = [];
+let genreArray = [];
 
 /* Observer */
 let observer = new IntersectionObserver((entradas, observer) => {
@@ -31,7 +31,6 @@ let observer = new IntersectionObserver((entradas, observer) => {
             trendingMovies();
         } else if(entrada.isIntersecting) {
             currentPage++;
-            console.log(currentPage)
             getMoviesByGenre(location.hash.split("-")[1])
         }
     })
@@ -117,7 +116,7 @@ const genreDropdownLoader = async() => {
     data.genres.forEach(item => {
         const category = `<option id="${item.name}">${item.name}</option>`;
         dropdown.innerHTML += category;
-        genreObject.push(item.name, item.id);
+        genreArray.push(item.name, item.id);
     })
 }
 genreDropdownLoader()
@@ -138,11 +137,11 @@ const getMoviesByGenre = async(id) => {
 
 }
 
-searchBtn.addEventListener("click", () => {
+/* searchBtn.addEventListener("click", () => {
     const searchInput = document.getElementById("search-input");
     movies = "";
     searchMovie(searchInput.value)
-})
+}) */
 
 window.addEventListener("DOMContentLoaded", function() { 
     dropdown.addEventListener("change", function() {
@@ -164,7 +163,7 @@ window.addEventListener("DOMContentLoaded", function() {
             break;
         default:
             movies = "";
-            let genreID = genreObject[genreObject.findIndex((genre) => genre === this.value) + 1];
+            let genreID = genreArray[genreArray.findIndex((genre) => genre === this.value) + 1];
             location.hash = `${this.value}-${genreID}`;
             gridTitle.innerText = this.value;
 
