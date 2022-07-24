@@ -55,7 +55,7 @@ const movieLoader = (item) => {
     
     movies += `
         <article class="movie-card">
-            <img src="https://image.tmdb.org/t/p/w500/${item.poster_path}" />
+            <img src="https://image.tmdb.org/t/p/w500/${item.poster_path}" onerror='this.src = "../assets/popcorn-no-poster.svg"'/>
             <a class="modal-anchor" href="/movieView.html#${item.id}">
                 <div class="description" id="description">
                     <p class="year">${item.release_date}</p>
