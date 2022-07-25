@@ -73,25 +73,46 @@ const searchMovie = async(query) => {
     movies = "";
     location.hash = `#search=${query.replace(/\s/g, "-")}`;
 
-    const res  = await api.get(searchEndpoint, {
-        params: {
-            query,
-        }
-    });
-
-    if(res.status !== 200){
-        console.log("Error")
-        gridTitle.innerText = "Network Error. Try again later"
-    } else {
-        res.data.results.forEach(movie => {
-            movieDetailedView(movie.id);
+    try {
+        const res  = await api.get(searchEndpoint, {
+            params: {
+                query,
+            }
         })
-        gridTitle.innerText = "Search"
+
+        if(res.status !== 200){
+            console.log("Error")
+            gridTitle.innerText = "Network Error. Try again later"
+        } else {
+            res.data.results.forEach(movie => {
+                movieDetailedView(movie.id);
+            })
+            gridTitle.innerText = "Search"
+        }
+    } catch {
+        ((error) => {
+            if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+            } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+            }
+            console.log(error.config);
+        });
     }
 
-    const moviesOnScreen = document.querySelectorAll("#movies-grid-container .movie-card");
+    /* const moviesOnScreen = document.querySelectorAll("#movies-grid-container .movie-card");
     let lastMovie = moviesOnScreen[moviesOnScreen.length - 1];
-    observer.observe(lastMovie);
+    observer.observe(lastMovie); */
 }
 
 const movieDetailedView = async(movie_id) => {
@@ -127,5 +148,4 @@ const getMoviesByGenre = async(id) => {
     const moviesOnScreen = document.querySelectorAll("#movies-grid-container .movie-card");
     let lastMovie = moviesOnScreen[moviesOnScreen.length - 1];
     observer.observe(lastMovie);
-
 }

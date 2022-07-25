@@ -5,7 +5,7 @@ searchBtn.addEventListener("click", () => {
 })
 
 window.addEventListener("DOMContentLoaded", () => {
-    favoritesMoviesIds.forEach(item => personalFavs(item))
+    favoritesMoviesIds.forEach(item => personalFavs(item));
 })
 
 window.addEventListener("DOMContentLoaded", function() { 
@@ -48,12 +48,12 @@ let observer = new IntersectionObserver((entradas, observer) => {
             currentPage++;
             trendingMovies();
         } else if(entrada.isIntersecting && location.hash.startsWith("#search=")) {
-            console.log(searchInput.value);
             currentPage++;
             searchMovie(searchInput.value);
         } else if(entrada.isIntersecting) {
             currentPage++;
             getMoviesByGenre(location.hash.split("-")[1])
+            console.log(location.hash)
         } 
     })
 }, {
