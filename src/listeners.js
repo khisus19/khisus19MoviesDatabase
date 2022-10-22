@@ -1,5 +1,6 @@
 // LISTENERS
-searchBtn.addEventListener("click", () => {
+searchBtn.addEventListener("click", (event) => {
+    event.preventDefault()
     movies = "";
     searchMovie(searchInput.value)
 })

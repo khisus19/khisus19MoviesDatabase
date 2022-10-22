@@ -83,13 +83,14 @@ const searchMovie = async(query) => {
         if(res.status !== 200){
             console.log("Error")
             gridTitle.innerText = "Network Error. Try again later"
+            throw(error)
         } else {
             res.data.results.forEach(movie => {
                 movieDetailedView(movie.id);
             })
             gridTitle.innerText = "Search"
         }
-    } catch {
+    } catch(error) {
         ((error) => {
             if (error.response) {
             // The request was made and the server responded with a status code
